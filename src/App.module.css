@@ -1,0 +1,18 @@
+.app {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #e4e4e7;
+  background: #fff;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+  letter-spacing: -0.02em;
+}

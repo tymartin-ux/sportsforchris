@@ -1,0 +1,67 @@
+.card {
+  background: #f4f4f5;
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.card:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-color: #d4d4d8;
+}
+
+.live {
+  border-color: #16a34a33;
+  background: #f0fdf4;
+}
+
+.liveBadge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #16a34a;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.teamName {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.score {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  min-width: 28px;
+  text-align: right;
+}
+
+.status {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #71717a;
+  text-align: right;
+}
