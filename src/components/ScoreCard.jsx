@@ -26,7 +26,7 @@ export default function ScoreCard({ event, onClick }) {
 
   return (
     <div className={`${styles.card} ${live ? styles.live : ''}`} onClick={onClick}>
-      {live && <span className={styles.liveBadge}>LIVE</span>}
+      {live && <span className={styles.liveDot} />}
 
       <div className={styles.team}>
         {away?.team?.logo && (
