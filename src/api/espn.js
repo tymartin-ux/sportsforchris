@@ -7,6 +7,8 @@ export const SPORTS = {
   EPL: { sport: 'soccer', league: 'eng.1', label: 'Premier League' },
   NCAAF: { sport: 'football', league: 'college-football', label: 'NCAAF' },
   NCAAB: { sport: 'basketball', league: 'mens-college-basketball', label: 'NCAAB' },
+  MENS_TENNIS: { sport: 'tennis', league: 'atp', label: 'Mens Tennis', gender: 'mens' },
+  WOMENS_TENNIS: { sport: 'tennis', league: 'wta', label: 'Womens Tennis', gender: 'womens' },
 };
 
 const BASE = 'https://site.api.espn.com/apis/site/v2/sports';

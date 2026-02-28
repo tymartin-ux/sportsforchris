@@ -9,7 +9,7 @@ export default function App() {
   const [selectedSport, setSelectedSport] = useState('NFL');
   const [selectedGame, setSelectedGame] = useState(null);
 
-  const { sport, league } = SPORTS[selectedSport];
+  const { sport, league, gender } = SPORTS[selectedSport];
 
   function handleSelectSport(key) {
     setSelectedSport(key);
@@ -25,7 +25,7 @@ export default function App() {
       <SportNav selected={selectedSport} onSelect={handleSelectSport} />
 
       <main>
-        <Scoreboard sport={sport} league={league} onSelectGame={setSelectedGame} />
+        <Scoreboard sport={sport} league={league} gender={gender} onSelectGame={setSelectedGame} />
       </main>
 
       {selectedGame && (

@@ -46,3 +46,93 @@
   color: #71717a;
   font-size: 14px;
 }
+
+.tournaments {
+  padding: 16px;
+}
+
+.tournamentSection {
+  margin-bottom: 28px;
+}
+
+.tournamentName {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #71717a;
+  margin: 0 0 10px;
+}
+
+.drawSection {
+  margin-bottom: 16px;
+}
+
+.drawName {
+  font-size: 11px;
+  font-weight: 600;
+  color: #a1a1aa;
+  margin-bottom: 6px;
+}
+
+.tennisCard {
+  background: #f4f4f5;
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  margin-bottom: 8px;
+}
+
+.tennisCard:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-color: #d4d4d8;
+}
+
+.tennisLive {
+  border-color: #16a34a33;
+  background: #f0fdf4;
+}
+
+.tennisLiveDot {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+.tennisRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.tennisName {
+  font-size: 13px;
+  font-weight: 400;
+  color: #111;
+}
+
+.tennisWinner {
+  font-weight: 700;
+}
+
+.tennisSets {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: 0.08em;
+}
+
+.tennisStatus {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #71717a;
+  text-align: right;
+}
