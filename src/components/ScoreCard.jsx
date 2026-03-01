@@ -23,6 +23,7 @@ export default function ScoreCard({ event, onClick }) {
 
   return (
     <div className={`${styles.card} ${live ? styles.live : ''}`} onClick={onClick}>
+      {live && <span className={styles.liveDot}>LIVE</span>}
 
 
       <div className={styles.team}>
