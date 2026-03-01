@@ -98,7 +98,7 @@ export default function App() {
 
       <main>
         {selectedSport === 'ALL'
-          ? <AllScoreboard date={selectedDate} onSelectGame={handleSelectGame} />
+          ? <AllScoreboard date={selectedDate} order={sportOrder} onSelectGame={handleSelectGame} />
           : <Scoreboard sport={sport} league={league} gender={gender} date={selectedDate} onSelectGame={(e) => handleSelectGame(e)} />
         }
       </main>

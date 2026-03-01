@@ -12,7 +12,6 @@ export default function GameDetail({ sport, league, event, onClose }) {
         <h2 className={styles.title}>{event?.name ?? 'Game Detail'}</h2>
 
         {loading && <div className={styles.spinner} />}
-        {error && <p className={styles.error}>Failed to load details: {error}</p>}
 
         {detail && !loading && (
           <>

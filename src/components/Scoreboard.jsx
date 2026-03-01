@@ -5,12 +5,24 @@ import styles from './Scoreboard.module.css';
 function TennisMatchCard({ competition, onClick }) {
   const away = competition.competitors?.find(c => c.homeAway === 'away');
   const home = competition.competitors?.find(c => c.homeAway === 'home');
+
   const getName = (c) =>
     c?.athlete?.shortName ??
     c?.athlete?.displayName ??
     c?.roster?.shortDisplayName ??
     c?.roster?.displayName ??
     '—';
+
+  const getFlag = (c) =>
+    c?.athlete?.flag?.href ??
+    c?.roster?.athletes?.[0]?.flag?.href ??
+    null;
+
+  const getFlagAlt = (c) =>
+    c?.athlete?.flag?.alt ??
+    c?.roster?.athletes?.[0]?.flag?.alt ??
+    '';
+
   const getSets = (c) => (c?.linescores ?? []).map(ls => ls.value ?? '').join('  ');
   const status = competition.status?.type;
   const isLive = status?.state === 'in';
@@ -24,26 +36,32 @@ function TennisMatchCard({ competition, onClick }) {
 
   return (
     <div className={`${styles.tennisCard} ${isLive ? styles.tennisLive : ''}`} onClick={onClick}>
-      <div className={styles.tennisRow}>
-        <span className={`${styles.tennisName} ${away?.winner ? styles.tennisWinner : ''}`}>{getName(away)}</span>
-        <span className={styles.tennisSets}>{getSets(away)}</span>
-      </div>
-      <div className={styles.tennisRow}>
-        <span className={`${styles.tennisName} ${home?.winner ? styles.tennisWinner : ''}`}>{getName(home)}</span>
-        <span className={styles.tennisSets}>{getSets(home)}</span>
-      </div>
+      {[away, home].map((c, i) => (
+        <div key={i} className={styles.tennisRow}>
+          <div className={styles.tennisPlayer}>
+            {getFlag(c) && (
+              <img src={getFlag(c)} alt={getFlagAlt(c)} className={styles.tennisFlag} />
+            )}
+            <span className={`${styles.tennisName} ${c?.winner ? styles.tennisWinner : ''}`}>{getName(c)}</span>
+          </div>
+          <span className={styles.tennisSets}>{getSets(c)}</span>
+        </div>
+      ))}
       <div className={styles.tennisStatus}>{statusLabel}</div>
     </div>
   );
 }
 
-export function AllScoreboard({ date, onSelectGame }) {
+export function AllScoreboard({ date, order, onSelectGame }) {
   const { results, loading, error } = useAllScoreboards(date);
 
   if (loading) return <div className={styles.center}><div className={styles.spinner} /></div>;
   if (error) return <div className={styles.center}><p className={styles.error}>Failed to load scores.</p></div>;
 
-  const withGames = results.filter(r => r.games.length > 0);
+  const sorted = order
+    ? [...results].sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key))
+    : results;
+  const withGames = sorted.filter(r => r.games.length > 0);
   if (withGames.length === 0) return <div className={styles.center}><p className={styles.empty}>No games scheduled.</p></div>;
 
   return (

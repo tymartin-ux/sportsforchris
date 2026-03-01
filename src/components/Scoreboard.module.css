@@ -104,6 +104,21 @@
   margin-bottom: 4px;
 }
 
+.tennisPlayer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tennisFlag {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
 .tennisName {
   font-size: 13px;
   font-weight: 400;
