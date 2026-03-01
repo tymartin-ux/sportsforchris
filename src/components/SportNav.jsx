@@ -2,18 +2,17 @@ import { useState, useRef } from 'react';
 import { SPORTS } from '../api/espn';
 import styles from './SportNav.module.css';
 
-export default function SportNav({ selected, onSelect, order, onReorder }) {
-  const [editing, setEditing] = useState(false);
+function ReorderSheet({ order, onReorder, onClose }) {
+  const [localOrder, setLocalOrder] = useState(order);
   const [dragKey, setDragKey] = useState(null);
   const [dropIdx, setDropIdx] = useState(null);
-  const navRef = useRef(null);
+  const listRef = useRef(null);
 
-  // Compute preview order while dragging
   const displayOrder = (() => {
-    if (!dragKey || dropIdx === null) return order;
-    const fromIdx = order.indexOf(dragKey);
-    if (fromIdx === dropIdx) return order;
-    const next = [...order];
+    if (!dragKey || dropIdx === null) return localOrder;
+    const fromIdx = localOrder.indexOf(dragKey);
+    if (fromIdx === dropIdx) return localOrder;
+    const next = [...localOrder];
     next.splice(fromIdx, 1);
     next.splice(dropIdx, 0, dragKey);
     return next;
@@ -22,19 +21,19 @@ export default function SportNav({ selected, onSelect, order, onReorder }) {
   function onPointerDown(e, key) {
     e.currentTarget.setPointerCapture(e.pointerId);
     setDragKey(key);
-    setDropIdx(order.indexOf(key));
+    setDropIdx(localOrder.indexOf(key));
   }
 
   function onPointerMove(e) {
-    if (!dragKey || !navRef.current) return;
-    const x = e.clientX;
-    const items = navRef.current.querySelectorAll('[data-editkey]');
+    if (!dragKey || !listRef.current) return;
+    const y = e.clientY;
+    const items = listRef.current.querySelectorAll('[data-itemkey]');
     let best = dropIdx;
     let bestDist = Infinity;
     items.forEach((el, i) => {
       const rect = el.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
-      const dist = Math.abs(x - center);
+      const center = rect.top + rect.height / 2;
+      const dist = Math.abs(y - center);
       if (dist < bestDist) { bestDist = dist; best = i; }
     });
     setDropIdx(best);
@@ -42,62 +41,94 @@ export default function SportNav({ selected, onSelect, order, onReorder }) {
 
   function onPointerUp() {
     if (dragKey !== null && dropIdx !== null) {
-      const fromIdx = order.indexOf(dragKey);
+      const fromIdx = localOrder.indexOf(dragKey);
       if (fromIdx !== dropIdx) {
-        const next = [...order];
+        const next = [...localOrder];
         next.splice(fromIdx, 1);
         next.splice(dropIdx, 0, dragKey);
-        onReorder(next);
+        setLocalOrder(next);
       }
     }
     setDragKey(null);
     setDropIdx(null);
   }
 
+  function handleDone() {
+    onReorder(localOrder);
+    onClose();
+  }
+
   return (
-    <div className={styles.navWrapper}>
-      <div className={styles.nav} ref={navRef}>
-        {!editing && (
+    <div className={styles.sheetOverlay} onClick={onClose}>
+      <div className={styles.sheet} onClick={e => e.stopPropagation()}>
+        <div className={styles.sheetHandle} />
+        <div className={styles.sheetHeader}>
+          <span className={styles.sheetTitle}>Reorder Sports</span>
+          <button className={styles.doneBtn} onClick={handleDone}>Done</button>
+        </div>
+        <div className={styles.list} ref={listRef}>
+          {displayOrder.map((key) => {
+            const { label } = SPORTS[key];
+            const isDragging = dragKey === key;
+            return (
+              <div
+                key={key}
+                data-itemkey={key}
+                className={`${styles.listItem} ${isDragging ? styles.itemDragging : ''}`}
+                onPointerDown={e => onPointerDown(e, key)}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerUp}
+              >
+                <span className={styles.handle}>≡</span>
+                <span className={styles.itemLabel}>{label}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function SportNav({ selected, onSelect, order, onReorder }) {
+  const [showSheet, setShowSheet] = useState(false);
+
+  return (
+    <>
+      <div className={styles.navWrapper}>
+        <div className={styles.nav}>
           <button
             className={`${styles.tab} ${selected === 'ALL' ? styles.active : ''}`}
             onClick={() => onSelect('ALL')}
           >
             All
           </button>
-        )}
-        {(editing ? displayOrder : order).map((key) => {
-          const { label } = SPORTS[key];
-          if (editing) {
-            const isDragging = dragKey === key;
+          {order.map((key) => {
+            const { label } = SPORTS[key];
             return (
-              <div
+              <button
                 key={key}
-                data-editkey={key}
-                className={`${styles.editItem} ${isDragging ? styles.dragging : ''}`}
-                onPointerDown={(e) => onPointerDown(e, key)}
-                onPointerMove={onPointerMove}
-                onPointerUp={onPointerUp}
-                onPointerCancel={onPointerUp}
+                className={`${styles.tab} ${selected === key ? styles.active : ''}`}
+                onClick={() => onSelect(key)}
               >
-                <span className={styles.dragHandle}>⠿</span>
-                <span className={styles.editLabel}>{label}</span>
-              </div>
+                {label}
+              </button>
             );
-          }
-          return (
-            <button
-              key={key}
-              className={`${styles.tab} ${selected === key ? styles.active : ''}`}
-              onClick={() => onSelect(key)}
-            >
-              {label}
-            </button>
-          );
-        })}
+          })}
+        </div>
+        <button className={styles.editBtn} onClick={() => setShowSheet(true)}>
+          Edit
+        </button>
       </div>
-      <button className={styles.editBtn} onClick={() => { setEditing(e => !e); setDragKey(null); }}>
-        {editing ? 'Done' : 'Edit'}
-      </button>
-    </div>
+
+      {showSheet && (
+        <ReorderSheet
+          order={order}
+          onReorder={onReorder}
+          onClose={() => setShowSheet(false)}
+        />
+      )}
+    </>
   );
 }

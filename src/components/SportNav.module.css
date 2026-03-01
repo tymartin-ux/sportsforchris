@@ -59,37 +59,97 @@
   color: #111;
 }
 
-.editItem {
+/* Bottom sheet */
+
+.sheetOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.sheet {
+  background: #fff;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px 16px 0 0;
+  padding: 0 0 32px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sheetHandle {
+  width: 36px;
+  height: 4px;
+  background: #d4d4d8;
+  border-radius: 2px;
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.sheetHeader {
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: space-between;
+  padding: 14px 20px 10px;
   flex-shrink: 0;
-  padding: 6px 10px;
-  border: 1px solid #e4e4e7;
-  border-radius: 20px;
-  background: #fff;
+  border-bottom: 1px solid #f4f4f5;
+}
+
+.sheetTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+.doneBtn {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
   cursor: grab;
   touch-action: none;
   user-select: none;
+  border-bottom: 1px solid #f4f4f5;
 }
 
-.editItem:active {
+.listItem:active {
   cursor: grabbing;
 }
 
-.dragging {
+.itemDragging {
   opacity: 0.4;
+  background: #f4f4f5;
 }
 
-.dragHandle {
-  font-size: 13px;
+.handle {
+  font-size: 20px;
   color: #aaa;
   line-height: 1;
 }
 
-.editLabel {
-  font-size: 13px;
+.itemLabel {
+  font-size: 15px;
   font-weight: 500;
   color: #111;
-  white-space: nowrap;
 }
