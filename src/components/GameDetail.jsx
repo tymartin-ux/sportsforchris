@@ -68,35 +68,43 @@ function BoxscoreTable({ detail }) {
   return (
     <div className={styles.section}>
       <h3 className={styles.sectionTitle}>Box Score</h3>
-      {teams.map((team, i) => {
-        const stats = team.statistics?.[0];
-        if (!stats) return null;
-        const headers = stats.names ?? [];
-        const athletes = (stats.athletes ?? []).filter(a => !a.didNotPlay);
-        return (
-          <div key={i} className={styles.boxTeam}>
-            <div className={styles.boxTeamName}>{team.team?.displayName}</div>
-            <div className={styles.tableWrap}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Player</th>
-                    {headers.map(h => <th key={h}>{h}</th>)}
-                  </tr>
-                </thead>
-                <tbody>
-                  {athletes.map((a, j) => (
-                    <tr key={j} className={a.athlete?.starter ? styles.starter : ''}>
-                      <td>{a.athlete?.shortName ?? a.athlete?.displayName}</td>
-                      {(a.stats ?? []).map((s, k) => <td key={k}>{s}</td>)}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-      })}
+      {teams.map((team, i) => (
+        <div key={i} className={styles.boxTeam}>
+          <div className={styles.boxTeamName}>{team.team?.displayName}</div>
+          {(team.statistics ?? []).map((stats, si) => {
+            const headers = stats.names ?? [];
+            const athletes = (stats.athletes ?? []).filter(a => !a.didNotPlay);
+            if (athletes.length === 0) return null;
+            return (
+              <div key={si}>
+                {stats.type && (
+                  <div className={styles.boxStatType}>
+                    {stats.type.charAt(0).toUpperCase() + stats.type.slice(1)}
+                  </div>
+                )}
+                <div className={styles.tableWrap}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Player</th>
+                        {headers.map(h => <th key={h}>{h}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {athletes.map((a, j) => (
+                        <tr key={j} className={a.athlete?.starter ? styles.starter : ''}>
+                          <td>{a.athlete?.shortName ?? a.athlete?.displayName}</td>
+                          {(a.stats ?? []).map((s, k) => <td key={k}>{s}</td>)}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }

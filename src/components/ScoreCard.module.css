@@ -60,6 +60,41 @@
   text-align: right;
 }
 
+.pitchers {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #e4e4e7;
+}
+
+.pitcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pitcherHeadshot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.pitcherName {
+  font-size: 12px;
+  font-weight: 500;
+  color: #111;
+  flex: 1;
+}
+
+.pitcherRecord {
+  font-size: 11px;
+  color: #71717a;
+}
+
 .status {
   margin-top: 8px;
   font-size: 11px;
