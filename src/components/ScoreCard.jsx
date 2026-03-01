@@ -5,10 +5,7 @@ function getStatus(event) {
   if (!status) return { label: '', live: false };
   if (status.completed) return { label: 'Final', live: false };
   if (status.state === 'in') {
-    const detail = event.status?.displayClock
-      ? `${event.status.displayClock} · ${status.shortDetail ?? ''}`
-      : status.shortDetail ?? 'Live';
-    return { label: detail, live: true };
+    return { label: status.shortDetail ?? 'Live', live: true };
   }
   // pre-game: show date/time
   const date = event.date ? new Date(event.date) : null;
@@ -26,7 +23,7 @@ export default function ScoreCard({ event, onClick }) {
 
   return (
     <div className={`${styles.card} ${live ? styles.live : ''}`} onClick={onClick}>
-      {live && <span className={styles.liveDot} />}
+
 
       <div className={styles.team}>
         {away?.team?.logo && (

@@ -13,8 +13,16 @@ export const SPORTS = {
 
 const BASE = 'https://site.api.espn.com/apis/site/v2/sports';
 
-export async function fetchScoreboard(sport, league) {
-  const res = await fetch(`${BASE}/${sport}/${league}/scoreboard`);
+function toESPNDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}${m}${d}`;
+}
+
+export async function fetchScoreboard(sport, league, date) {
+  const dateParam = date ? `?dates=${toESPNDate(date)}` : '';
+  const res = await fetch(`${BASE}/${sport}/${league}/scoreboard${dateParam}`);
   if (!res.ok) throw new Error(`ESPN API error: ${res.status}`);
   const data = await res.json();
   return data.events ?? [];

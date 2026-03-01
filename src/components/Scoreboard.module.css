@@ -96,15 +96,6 @@
   background: #f0fdf4;
 }
 
-.tennisLiveDot {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #16a34a;
-}
 
 .tennisRow {
   display: flex;
