@@ -116,19 +116,32 @@ function KeyStats({ detail }) {
   return (
     <div className={styles.section}>
       <h3 className={styles.sectionTitle}>Leaders</h3>
-      <div className={styles.statsGrid}>
-        {leaders.map((category) => {
-          const leader = category.leaders?.[0];
-          if (!leader) return null;
-          return (
-            <div key={category.name} className={styles.statCard}>
-              <div className={styles.statLabel}>{category.displayName}</div>
-              <div className={styles.statAthlete}>{leader.athlete?.displayName ?? '—'}</div>
-              <div className={styles.statValue}>{leader.displayValue}</div>
+      {leaders.map((teamEntry, i) => {
+        const categories = teamEntry.leaders ?? [];
+        if (categories.length === 0) return null;
+        return (
+          <div key={i} className={styles.boxTeam}>
+            <div className={styles.boxTeamName}>{teamEntry.team?.displayName}</div>
+            <div className={styles.statsGrid}>
+              {categories.map((category) => {
+                const leader = category.leaders?.[0];
+                if (!leader) return null;
+                return (
+                  <div key={category.name} className={styles.statCard}>
+                    <div className={styles.statLabel}>{category.displayName}</div>
+                    <div className={styles.statAthlete}>
+                      {leader.athlete?.shortName ?? leader.athlete?.displayName ?? '—'}
+                    </div>
+                    <div className={styles.statValue}>
+                      {leader.mainStat?.value} {leader.mainStat?.label}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

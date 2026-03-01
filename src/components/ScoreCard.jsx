@@ -30,6 +30,7 @@ export default function ScoreCard({ event, onClick }) {
   const home = competitors.find((c) => c.homeAway === 'home');
   const away = competitors.find((c) => c.homeAway === 'away');
   const { label: statusLabel, live } = getStatus(event);
+  const status = event.status?.type;
   const awayPitcher = getPitcher(away);
   const homePitcher = getPitcher(home);
   const hasPitchers = awayPitcher || homePitcher;
