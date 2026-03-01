@@ -36,6 +36,7 @@ function TennisMatchCard({ competition, onClick }) {
 
   return (
     <div className={`${styles.tennisCard} ${isLive ? styles.tennisLive : ''}`} onClick={onClick}>
+      {isLive && <span className={styles.tennisLiveDot}>LIVE</span>}
       {[away, home].map((c, i) => (
         <div key={i} className={styles.tennisRow}>
           <div className={styles.tennisPlayer}>
