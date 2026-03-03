@@ -98,7 +98,7 @@ export function AllScoreboard({ date, order, onSelectGame }) {
                   <div className={styles.drawName}>{tournament.name}</div>
                   {tournament.draws.map(draw => (
                     <div key={draw.grouping.slug}>
-                      {(draw.competitions ?? []).map(comp => (
+                      {sortGames(draw.competitions ?? []).map(comp => (
                         <TennisMatchCard
                           key={comp.id}
                           competition={comp}
@@ -191,7 +191,7 @@ export default function Scoreboard({ sport, league, gender, date, onSelectGame }
             {tournament.draws.map(draw => (
               <div key={draw.grouping.slug} className={styles.drawSection}>
                 <div className={styles.drawName}>{draw.grouping.displayName}</div>
-                {(draw.competitions ?? []).map(comp => (
+                {sortGames(draw.competitions ?? []).map(comp => (
                   <TennisMatchCard
                     key={comp.id}
                     competition={comp}
