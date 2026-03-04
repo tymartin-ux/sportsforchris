@@ -64,7 +64,6 @@ function ReorderSheet({ order, onReorder, onClose }) {
         <div className={styles.sheetHandle} />
         <div className={styles.sheetHeader}>
           <span className={styles.sheetTitle}>Reorder Sports</span>
-          <button className={styles.doneBtn} onClick={handleDone}>Done</button>
         </div>
         <div className={styles.list} ref={listRef}>
           {displayOrder.map((key) => {
@@ -85,6 +84,9 @@ function ReorderSheet({ order, onReorder, onClose }) {
               </div>
             );
           })}
+        </div>
+        <div className={styles.sheetFooter}>
+          <button className={styles.doneBtn} onClick={handleDone}>Done</button>
         </div>
       </div>
     </div>
