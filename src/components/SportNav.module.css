@@ -76,8 +76,8 @@
   width: 100%;
   max-width: 640px;
   border-radius: 16px 16px 0 0;
-  padding: 0 0 32px;
-  max-height: 80vh;
+  padding: 0 0 env(safe-area-inset-bottom, 16px);
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
 }
