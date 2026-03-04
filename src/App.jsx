@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { SPORTS } from './api/espn';
+import { SPORTS, STANDINGS_STATS } from './api/espn';
 import SportNav from './components/SportNav';
 import Scoreboard, { AllScoreboard } from './components/Scoreboard';
+import Standings from './components/Standings';
 import GameDetail from './components/GameDetail';
 import styles from './App.module.css';
+
+const SUPPORTS_STANDINGS = new Set(Object.keys(STANDINGS_STATS));
 
 function buildDays() {
   const today = new Date();
@@ -99,7 +102,10 @@ export default function App() {
       <main>
         {selectedSport === 'ALL'
           ? <AllScoreboard date={selectedDate} order={sportOrder} onSelectGame={handleSelectGame} />
-          : <Scoreboard sport={sport} league={league} gender={gender} date={selectedDate} onSelectGame={(e) => handleSelectGame(e)} />
+          : <>
+              <Scoreboard sport={sport} league={league} gender={gender} date={selectedDate} onSelectGame={(e) => handleSelectGame(e)} />
+              {SUPPORTS_STANDINGS.has(league) && <Standings sport={sport} league={league} />}
+            </>
         }
       </main>
 
