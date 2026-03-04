@@ -75,14 +75,17 @@ function ReorderSheet({ order, onReorder, onClose }) {
                 data-itemkey={key}
                 className={`${styles.listItem} ${isDragging ? styles.itemDragging : ''}`}
               >
-                <span
-                  className={styles.handle}
+                <div
+                  className={styles.dragZone}
                   onPointerDown={e => onPointerDown(e, key)}
                   onPointerMove={onPointerMove}
                   onPointerUp={onPointerUp}
                   onPointerCancel={onPointerUp}
-                >≡</span>
-                <span className={styles.itemLabel}>{label}</span>
+                >
+                  <span className={styles.handle}>≡</span>
+                  <span className={styles.itemLabel}>{label}</span>
+                </div>
+                <div className={styles.scrollZone} />
               </div>
             );
           })}
