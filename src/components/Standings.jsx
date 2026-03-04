@@ -33,7 +33,8 @@ export default function Standings({ sport, league }) {
   return (
     <div className={styles.container}>
       {groups.map((group, gi) => {
-        const entries = group.standings?.entries ?? [];
+        const entries = [...(group.standings?.entries ?? [])];
+        if (league === 'nba' || league === 'mens-college-basketball') entries.reverse();
         return (
           <section key={gi} className={styles.group}>
             <h2 className={styles.groupName}>{group.name}</h2>
