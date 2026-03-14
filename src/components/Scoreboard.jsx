@@ -34,9 +34,12 @@ function TennisMatchCard({ competition, onClick }) {
     ? new Date(competition.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     : '—';
 
+  const round = competition.notes?.[0]?.text;
+
   return (
     <div className={`${styles.tennisCard} ${isLive ? styles.tennisLive : ''}`} onClick={onClick}>
       {isLive && <span className={styles.tennisLiveDot}>LIVE</span>}
+      {round && <div className={styles.tennisRound}>{round}</div>}
       {[away, home].map((c, i) => (
         <div key={i} className={styles.tennisRow}>
           <div className={styles.tennisPlayer}>
