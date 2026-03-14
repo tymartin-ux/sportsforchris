@@ -34,7 +34,7 @@ function TennisMatchCard({ competition, onClick }) {
     ? new Date(competition.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     : '—';
 
-  const round = competition.notes?.[0]?.text;
+  const round = competition.round?.displayName;
 
   return (
     <div className={`${styles.tennisCard} ${isLive ? styles.tennisLive : ''}`} onClick={onClick}>
