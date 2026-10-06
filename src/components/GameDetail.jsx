@@ -72,14 +72,16 @@ function BoxscoreTable({ detail }) {
         <div key={i} className={styles.boxTeam}>
           <div className={styles.boxTeamName}>{team.team?.displayName}</div>
           {(team.statistics ?? []).map((stats, si) => {
-            const headers = stats.names ?? [];
+            // Football/hockey send `labels` + `name`; basketball/baseball send `names` + `type`
+            const headers = stats.labels ?? stats.names ?? [];
+            const group = stats.type ?? stats.name;
             const athletes = (stats.athletes ?? []).filter(a => !a.didNotPlay);
             if (athletes.length === 0) return null;
             return (
               <div key={si}>
-                {stats.type && (
+                {group && (
                   <div className={styles.boxStatType}>
-                    {stats.type.charAt(0).toUpperCase() + stats.type.slice(1)}
+                    {group.replace(/([a-z])([A-Z])/g, '$1 $2')}
                   </div>
                 )}
                 <div className={styles.tableWrap}>
