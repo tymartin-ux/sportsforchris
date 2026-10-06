@@ -25,6 +25,15 @@ function getPitcher(competitor) {
   };
 }
 
+// National TV/streaming channels only; regional feeds come through as cryptic codes
+function getChannel(event) {
+  const broadcasts = event.competitions?.[0]?.broadcasts ?? [];
+  const names = broadcasts
+    .filter((b) => b.market === 'national')
+    .flatMap((b) => b.names ?? []);
+  return [...new Set(names)].join(', ');
+}
+
 export default function ScoreCard({ event, onClick }) {
   const competitors = event.competitions?.[0]?.competitors ?? [];
   const home = competitors.find((c) => c.homeAway === 'home');
@@ -34,6 +43,7 @@ export default function ScoreCard({ event, onClick }) {
   const awayPitcher = getPitcher(away);
   const homePitcher = getPitcher(home);
   const hasPitchers = awayPitcher || homePitcher;
+  const channel = status?.completed ? '' : getChannel(event);
 
   return (
     <div className={`${styles.card} ${live ? styles.live : ''}`} onClick={onClick}>
@@ -67,7 +77,11 @@ export default function ScoreCard({ event, onClick }) {
         </div>
       )}
 
-      <div className={styles.status}>{statusLabel}</div>
+      <div className={styles.status}>
+        {channel && <span className={styles.channel}>{channel}</span>}
+        {channel && statusLabel && ' · '}
+        {statusLabel}
+      </div>
     </div>
   );
 }

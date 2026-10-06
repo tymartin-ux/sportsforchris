@@ -101,3 +101,12 @@
   color: #71717a;
   text-align: right;
 }
+
+.channel {
+  font-weight: 600;
+  color: #3f3f46;
+}
+
+.live .status {
+  padding-left: 48px;
+}
