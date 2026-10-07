@@ -19,5 +19,15 @@ export function useGameDetail(sport, league, eventId) {
       .finally(() => setLoading(false));
   }, [sport, league, eventId]);
 
+  // Keep a live game current without flashing the loading spinner
+  const isLive = detail?.header?.competitions?.[0]?.status?.type?.state === 'in';
+  useEffect(() => {
+    if (!eventId || !isLive) return;
+    const interval = setInterval(() => {
+      fetchGameDetail(sport, league, eventId).then(setDetail).catch(() => {});
+    }, 10_000);
+    return () => clearInterval(interval);
+  }, [sport, league, eventId, isLive]);
+
   return { detail, loading, error };
 }

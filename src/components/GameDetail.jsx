@@ -1,4 +1,5 @@
 import { useGameDetail } from '../hooks/useGameDetail';
+import BaseballSituation from './BaseballSituation';
 import styles from './GameDetail.module.css';
 
 export default function GameDetail({ sport, league, event, onClose }) {
@@ -15,11 +16,133 @@ export default function GameDetail({ sport, league, event, onClose }) {
 
         {detail && !loading && (
           <>
+            {sport === 'baseball' && <LiveBaseball detail={detail} />}
             <LinescoreTable detail={detail} />
             <BoxscoreTable detail={detail} />
             <KeyStats detail={detail} />
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+// Name, headshot and today's stat line for everyone in the lineups and box score
+function buildAthleteMap(detail) {
+  const map = {};
+  for (const team of detail?.rosters ?? []) {
+    for (const entry of team.roster ?? []) {
+      const a = entry.athlete;
+      if (a?.id) map[a.id] = { name: a.shortName ?? a.displayName, headshot: a.headshot?.href };
+    }
+  }
+  for (const team of detail?.boxscore?.players ?? []) {
+    for (const group of team.statistics ?? []) {
+      const labels = group.labels ?? group.names ?? [];
+      const stat = (row, label) => row.stats?.[labels.indexOf(label)];
+      for (const row of group.athletes ?? []) {
+        const a = row.athlete;
+        if (!a?.id) continue;
+        const line = group.type === 'pitching'
+          ? [['IP', 'IP'], ['ER', 'ER'], ['K', 'K'], ['PC', 'P']]
+              .filter(([label]) => stat(row, label) != null)
+              .map(([label, suffix]) => `${stat(row, label)} ${suffix}`)
+              .join(', ')
+          : stat(row, 'H-AB');
+        map[a.id] = {
+          name: a.shortName ?? a.displayName,
+          headshot: a.headshot?.href,
+          ...map[a.id],
+          [group.type === 'pitching' ? 'pitchingLine' : 'battingLine']: line,
+        };
+      }
+    }
+  }
+  return map;
+}
+
+function LiveBaseball({ detail }) {
+  const status = detail?.header?.competitions?.[0]?.status;
+  const situation = detail?.situation;
+  if (status?.type?.state !== 'in' || !situation) return null;
+
+  const plays = detail.plays ?? [];
+  const lastPlay = plays[plays.length - 1];
+  const athletes = buildAthleteMap(detail);
+  const bases = ['onFirst', 'onSecond', 'onThird'].map((k) => Boolean(situation[k] ?? lastPlay?.[k]));
+
+  const batter = athletes[situation.batter?.playerId];
+  const pitcher = athletes[situation.pitcher?.playerId];
+  const atBatPlays = situation.batter && lastPlay
+    ? plays.filter((p) => p.atBatId === lastPlay.atBatId)
+    : [];
+  const pitches = atBatPlays.filter((p) => /^Pitch \d+ : /.test(p.text ?? ''));
+  const lastResult = [...plays].reverse().find((p) => p.type?.type === 'play-result');
+  const dueUp = (situation.dueUp ?? []).map((d) => athletes[d.playerId]).filter(Boolean);
+
+  return (
+    <div className={styles.section}>
+      <h3 className={styles.sectionTitle}>Live</h3>
+      <div className={styles.liveBox}>
+        <div className={styles.liveHeader}>
+          <span className={styles.liveInning}>{status.type.detail ?? status.type.shortDetail}</span>
+          <BaseballSituation
+            large
+            bases={bases}
+            balls={situation.balls}
+            strikes={situation.strikes}
+            outs={situation.outs}
+          />
+        </div>
+
+        {(batter || pitcher) && (
+          <div className={styles.matchup}>
+            <MatchupPlayer label="At bat" player={batter} line={batter?.battingLine} />
+            <MatchupPlayer label="Pitching" player={pitcher} line={pitcher?.pitchingLine} />
+          </div>
+        )}
+
+        {pitches.length > 0 && (
+          <ol className={styles.pitchList}>
+            {pitches.map((p, i) => (
+              <li key={p.id} className={styles.pitch}>
+                <span className={styles.pitchNum}>{i + 1}</span>
+                <span className={styles.pitchResult}>{p.text.replace(/^Pitch \d+ : /, '')}</span>
+                <span className={styles.pitchType}>
+                  {[p.pitchType?.text, p.pitchVelocity && `${p.pitchVelocity} mph`].filter(Boolean).join(' · ')}
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
+
+        {dueUp.length > 0 && (
+          <div className={styles.liveNote}>
+            <span className={styles.liveNoteLabel}>Due up</span>
+            {dueUp.map((a) => a.name).join(', ')}
+          </div>
+        )}
+
+        {lastResult?.text && (
+          <div className={styles.liveNote}>
+            <span className={styles.liveNoteLabel}>Last play</span>
+            {lastResult.text}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MatchupPlayer({ label, player, line }) {
+  if (!player) return <div className={styles.matchupPlayer} />;
+  return (
+    <div className={styles.matchupPlayer}>
+      {player.headshot && <img src={player.headshot} alt={player.name} className={styles.matchupHeadshot} />}
+      <div>
+        <div className={styles.statLabel}>{label}</div>
+        <div className={styles.statAthlete}>{player.name}</div>
+        {line && <div className={styles.statValue}>{line}</div>}
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import BaseballSituation from './BaseballSituation';
 import styles from './ScoreCard.module.css';
 
 function getStatus(event) {
@@ -44,6 +45,8 @@ export default function ScoreCard({ event, onClick }) {
   const homePitcher = getPitcher(home);
   const hasPitchers = awayPitcher || homePitcher;
   const channel = status?.completed ? '' : getChannel(event);
+  const situation = event.competitions?.[0]?.situation;
+  const showSituation = live && typeof situation?.onFirst === 'boolean';
 
   return (
     <div className={`${styles.card} ${live ? styles.live : ''}`} onClick={onClick}>
@@ -74,6 +77,17 @@ export default function ScoreCard({ event, onClick }) {
               {p.record && <span className={styles.pitcherRecord}>{p.record}</span>}
             </div>
           ))}
+        </div>
+      )}
+
+      {showSituation && (
+        <div className={styles.situation}>
+          <BaseballSituation
+            bases={[situation.onFirst, situation.onSecond, situation.onThird]}
+            balls={situation.balls}
+            strikes={situation.strikes}
+            outs={situation.outs}
+          />
         </div>
       )}
 

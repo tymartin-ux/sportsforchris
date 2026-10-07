@@ -176,3 +176,98 @@
 .starter td {
   font-weight: 500;
 }
+
+.liveBox {
+  background: #f0fdf4;
+  border: 1px solid #16a34a33;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.liveHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.liveInning {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+.matchup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.matchupPlayer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.matchupHeadshot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.pitchList {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid #16a34a33;
+}
+
+.pitch {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13px;
+  padding: 3px 0;
+}
+
+.pitchNum {
+  width: 14px;
+  color: #71717a;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.pitchResult {
+  flex: 1;
+  color: #111;
+  font-weight: 500;
+}
+
+.pitchType {
+  color: #555;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.liveNote {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #111;
+  line-height: 1.4;
+}
+
+.liveNoteLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #71717a;
+  margin-bottom: 2px;
+}

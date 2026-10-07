@@ -1,0 +1,57 @@
+.situation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diamond {
+  width: 26px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.baseOff {
+  fill: #d4d4d8;
+}
+
+.baseOn {
+  fill: #111;
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+  font-variant-numeric: tabular-nums;
+}
+
+.outs {
+  display: flex;
+  gap: 3px;
+}
+
+.out {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4d4d8;
+}
+
+.outOn {
+  background: #111;
+}
+
+.large .diamond {
+  width: 44px;
+  height: 30px;
+}
+
+.large .count {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.large .out {
+  width: 9px;
+  height: 9px;
+}

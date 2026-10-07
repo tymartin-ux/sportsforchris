@@ -95,6 +95,12 @@
   color: #71717a;
 }
 
+.situation {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
 .status {
   margin-top: 8px;
   font-size: 11px;
