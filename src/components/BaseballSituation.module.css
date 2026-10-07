@@ -11,17 +11,17 @@
 }
 
 .baseOff {
-  fill: #d4d4d8;
+  fill: var(--border-strong);
 }
 
 .baseOn {
-  fill: #111;
+  fill: var(--text);
 }
 
 .count {
   font-size: 12px;
   font-weight: 600;
-  color: #111;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -34,11 +34,11 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #d4d4d8;
+  background: var(--border-strong);
 }
 
 .outOn {
-  background: #111;
+  background: var(--text);
 }
 
 .large .diamond {

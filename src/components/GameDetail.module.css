@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--overlay);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -17,7 +17,7 @@
 }
 
 .panel {
-  background: #fff;
+  background: var(--panel);
   width: 100%;
   max-width: 640px;
   max-height: 85vh;
@@ -39,35 +39,35 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: #f4f4f5;
+  background: var(--surface);
   border: none;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 14px;
-  color: #555;
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .close:hover {
-  background: #e4e4e7;
+  background: var(--surface-hover);
 }
 
 .title {
   font-size: 16px;
   font-weight: 700;
-  color: #111;
+  color: var(--text);
   margin: 0 40px 16px 0;
 }
 
 .spinner {
   width: 32px;
   height: 32px;
-  border: 3px solid #e4e4e7;
-  border-top-color: #111;
+  border: 3px solid var(--border);
+  border-top-color: var(--text);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   margin: 24px auto;
@@ -91,7 +91,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #71717a;
+  color: var(--text-muted);
   margin: 0 0 10px;
 }
 
@@ -110,12 +110,12 @@
 .table td {
   text-align: center;
   padding: 6px 10px;
-  border-bottom: 1px solid #f4f4f5;
+  border-bottom: 1px solid var(--border-subtle);
   white-space: nowrap;
 }
 
 .table th {
-  color: #71717a;
+  color: var(--text-muted);
   font-weight: 600;
   font-size: 11px;
 }
@@ -132,7 +132,7 @@
 }
 
 .statCard {
-  background: #f4f4f5;
+  background: var(--surface);
   border-radius: 8px;
   padding: 10px 12px;
 }
@@ -142,19 +142,19 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #71717a;
+  color: var(--text-muted);
   margin-bottom: 4px;
 }
 
 .statAthlete {
   font-size: 13px;
   font-weight: 600;
-  color: #111;
+  color: var(--text);
 }
 
 .statValue {
   font-size: 12px;
-  color: #555;
+  color: var(--text-secondary);
   margin-top: 2px;
 }
 
@@ -164,7 +164,7 @@
 .boxTeamName {
   font-size: 13px;
   font-weight: 700;
-  color: #111;
+  color: var(--text);
   margin-bottom: 6px;
 }
 .boxStatType {
@@ -172,7 +172,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #71717a;
+  color: var(--text-muted);
   margin: 10px 0 4px;
 }
 .starter td {
@@ -180,8 +180,8 @@
 }
 
 .liveBox {
-  background: #f0fdf4;
-  border: 1px solid #16a34a33;
+  background: var(--live-bg);
+  border: 1px solid var(--live-border);
   border-radius: 10px;
   padding: 14px 16px;
 }
@@ -196,7 +196,7 @@
 .liveInning {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: var(--text);
 }
 
 .matchup {
@@ -218,7 +218,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  background: #fff;
+  background: var(--panel);
   flex-shrink: 0;
 }
 
@@ -226,7 +226,7 @@
   list-style: none;
   margin: 14px 0 0;
   padding: 10px 0 0;
-  border-top: 1px solid #16a34a33;
+  border-top: 1px solid var(--live-border);
 }
 
 .pitch {
@@ -239,7 +239,7 @@
 
 .pitchNum {
   width: 14px;
-  color: #71717a;
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 600;
   text-align: right;
@@ -247,12 +247,12 @@
 
 .pitchResult {
   flex: 1;
-  color: #111;
+  color: var(--text);
   font-weight: 500;
 }
 
 .pitchType {
-  color: #555;
+  color: var(--text-secondary);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -260,7 +260,7 @@
 .liveNote {
   margin-top: 12px;
   font-size: 13px;
-  color: #111;
+  color: var(--text);
   line-height: 1.4;
 }
 
@@ -270,6 +270,6 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #71717a;
+  color: var(--text-muted);
   margin-bottom: 2px;
 }

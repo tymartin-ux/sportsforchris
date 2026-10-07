@@ -1,4 +1,5 @@
 import BaseballSituation from './BaseballSituation';
+import TeamLogo from './TeamLogo';
 import styles from './ScoreCard.module.css';
 
 function getStatus(event) {
@@ -53,17 +54,23 @@ export default function ScoreCard({ event, onClick }) {
       {live && <span className={styles.liveDot}>LIVE</span>}
 
       <div className={styles.team}>
-        {away?.team?.logo && (
-          <img src={away.team.logo} alt={away.team.abbreviation} className={styles.logo} />
-        )}
+        <TeamLogo
+          logo={away?.team?.logo}
+          logoDark={away?.team?.logoDark}
+          alt={away?.team?.abbreviation}
+          className={styles.logo}
+        />
         <span className={styles.teamName}>{away?.team?.shortDisplayName ?? away?.team?.name ?? '—'}</span>
         <span className={styles.score}>{away?.score ?? ''}</span>
       </div>
 
       <div className={styles.team}>
-        {home?.team?.logo && (
-          <img src={home.team.logo} alt={home.team.abbreviation} className={styles.logo} />
-        )}
+        <TeamLogo
+          logo={home?.team?.logo}
+          logoDark={home?.team?.logoDark}
+          alt={home?.team?.abbreviation}
+          className={styles.logo}
+        />
         <span className={styles.teamName}>{home?.team?.shortDisplayName ?? home?.team?.name ?? '—'}</span>
         <span className={styles.score}>{home?.score ?? ''}</span>
       </div>

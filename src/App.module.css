@@ -1,28 +1,50 @@
 .app {
   min-height: 100vh;
-  background: #fff;
+  background: var(--bg);
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 14px 16px 10px;
-  border-bottom: 1px solid #e4e4e7;
-  background: #fff;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
 }
 
 .logo {
   font-size: 20px;
   font-weight: 800;
-  color: #111;
+  color: var(--text);
   margin: 0;
   letter-spacing: -0.02em;
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: -4px -6px -4px 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.themeToggle:hover {
+  background: var(--surface);
+  color: var(--text);
 }
 
 .dateNav {
   display: flex;
   gap: 4px;
   padding: 10px 16px;
-  background: #fff;
-  border-bottom: 1px solid #e4e4e7;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -38,10 +60,10 @@
   align-items: center;
   gap: 1px;
   padding: 6px 12px;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--border);
   border-radius: 20px;
-  background: #fff;
-  color: #555;
+  background: var(--bg);
+  color: var(--text-secondary);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -50,12 +72,12 @@
 }
 
 .dateTab:hover {
-  background: #f4f4f5;
-  color: #111;
+  background: var(--surface);
+  color: var(--text);
 }
 
 .dateActive {
-  background: #111;
-  color: #fff;
-  border-color: #111;
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 }

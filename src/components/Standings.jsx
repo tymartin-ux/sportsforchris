@@ -1,5 +1,6 @@
 import { useStandings } from '../hooks/useStandings';
 import { STANDINGS_STATS } from '../api/espn';
+import TeamLogo from './TeamLogo';
 import styles from './Standings.module.css';
 
 export default function Standings({ sport, league }) {
@@ -58,13 +59,7 @@ export default function Standings({ sport, league }) {
                     return (
                       <tr key={ei}>
                         <td className={styles.teamCell}>
-                          {team.logos?.[0]?.href && (
-                            <img
-                              src={team.logos[0].href}
-                              alt=""
-                              className={styles.teamLogo}
-                            />
-                          )}
+                          <TeamLogo logo={team.logos?.[0]?.href} alt="" className={styles.teamLogo} />
                           <span className={styles.teamName}>{team.shortDisplayName ?? team.displayName ?? team.name}</span>
                         </td>
                         {cols.map(col => (
