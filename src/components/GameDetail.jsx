@@ -149,11 +149,15 @@ function MatchupPlayer({ label, player, line }) {
 }
 
 function LinescoreTable({ detail }) {
-  const linescore = detail?.header?.competitions?.[0]?.competitors;
-  if (!linescore) return null;
+  const competitors = detail?.header?.competitions?.[0]?.competitors;
+  if (!competitors) return null;
+  // Away team on top, matching the score cards
+  const linescore = [...competitors].sort((a, b) => (a.homeAway === 'home') - (b.homeAway === 'home'));
 
-  const periods = linescore[0]?.linescores ?? [];
-  if (periods.length === 0) return null;
+  // Teams can have different inning counts (e.g. the top of an inning in baseball)
+  const periodCount = Math.max(...linescore.map((team) => team.linescores?.length ?? 0));
+  if (periodCount === 0) return null;
+  const periods = Array.from({ length: periodCount });
 
   return (
     <div className={styles.section}>
@@ -171,9 +175,10 @@ function LinescoreTable({ detail }) {
             {linescore.map((team) => (
               <tr key={team.id}>
                 <td>{team.team?.abbreviation ?? team.team?.name}</td>
-                {(team.linescores ?? []).map((ls, i) => (
-                  <td key={i}>{ls.value ?? ls.displayValue ?? '—'}</td>
-                ))}
+                {periods.map((_, i) => {
+                  const ls = team.linescores?.[i];
+                  return <td key={i}>{ls ? ls.value ?? ls.displayValue ?? '—' : ''}</td>;
+                })}
                 <td><strong>{team.score}</strong></td>
               </tr>
             ))}

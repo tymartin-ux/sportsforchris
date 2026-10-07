@@ -21,6 +21,8 @@
   width: 100%;
   max-width: 640px;
   max-height: 85vh;
+  /* dvh tracks the visible area while the mobile URL bar is showing */
+  max-height: 85dvh;
   overflow-y: auto;
   border-radius: 16px 16px 0 0;
   padding: 24px;
